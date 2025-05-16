@@ -1,0 +1,93 @@
+import cv2
+import numpy as np
+import time
+import mediapipe.python.solutions.hands as mp_hands
+import mediapipe.python.solutions.drawing_utils as mp_drawing
+import mediapipe.python.solutions.drawing_styles as mp_drawing_styles
+
+prev_wing_state = None
+prev_motor_state = None
+last_wing_print_time = 0
+last_motor_print_time = 0
+PRINT_DELAY = 0.5  # seconds
+
+def use_coordinates(hand_landmarks, shape):
+    global prev_wing_state, prev_motor_state, last_wing_print_time, last_motor_print_time
+    
+    frame_height, frame_width, _ = shape
+    landmarks = hand_landmarks.landmark
+
+    wrist = landmarks[0]
+    middle_tip = landmarks[12]
+    
+    dx = middle_tip.x - wrist.x
+    dy = middle_tip.y - wrist.y
+    distance = np.sqrt(dx**2 + dy**2)
+
+    # Wing state detection
+    wing_state = "closed" if distance < 0.15 else "open"
+    current_time = time.time()
+    if wing_state != prev_wing_state and (current_time - last_wing_print_time) > PRINT_DELAY:
+        if wing_state == "closed":
+            print("Closing wings")
+        else:
+            print("Opening wings")
+        prev_wing_state = wing_state
+        last_wing_print_time = current_time
+
+    # Motor direction detection
+    horizontal_diff = middle_tip.x - wrist.x
+    motor_state = None
+    threshold = 0.05
+
+    if horizontal_diff > threshold:
+        motor_state = "turning motor right"
+    elif horizontal_diff < -threshold:
+        motor_state = "turning motor left"
+    else:
+        motor_state = "motor stopped"
+
+    if motor_state != prev_motor_state and (current_time - last_motor_print_time) > PRINT_DELAY:
+        print(motor_state)
+        prev_motor_state = motor_state
+        last_motor_print_time = current_time
+
+
+def run_hand_tracking_on_webcam():
+    cap = cv2.VideoCapture(0)
+    with mp_hands.Hands(
+        model_complexity=0,
+        max_num_hands=1,
+        min_detection_confidence=0.5,
+        min_tracking_confidence=0.5,
+    ) as hands:
+        while cap.isOpened():
+            success, frame = cap.read()
+            if not success:
+                print("Ignoring empty camera frame...")
+                continue
+
+            frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            results = hands.process(frame_rgb)
+
+            if results.multi_hand_landmarks:
+                for hand_landmarks in results.multi_hand_landmarks:
+                    use_coordinates(hand_landmarks, frame.shape)
+                    mp_drawing.draw_landmarks(
+                        frame,
+                        hand_landmarks,
+                        mp_hands.HAND_CONNECTIONS,
+                        mp_drawing_styles.get_default_hand_landmarks_style(),
+                        mp_drawing_styles.get_default_hand_connections_style()
+                    )
+                    break  # Only process first hand
+
+            cv2.imshow("Hand Tracking", cv2.flip(frame, 1))
+            if cv2.waitKey(1) & 0xFF == ord("q"):
+                break
+
+    cap.release()
+    cv2.destroyAllWindows()
+
+if __name__ == "__main__":
+    run_hand_tracking_on_webcam()

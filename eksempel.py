@@ -5,6 +5,7 @@ import mediapipe.python.solutions.hands as mp_hands
 import mediapipe.python.solutions.drawing_utils as mp_drawing
 import mediapipe.python.solutions.drawing_styles as mp_drawing_styles
 
+from motorkontroll import SerialHandler
 
 
 def use_coordinates(hand_landmarks, hand_label, shape):
