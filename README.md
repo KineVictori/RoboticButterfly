@@ -1,4 +1,4 @@
-# Sommerfugl Håndstyring
+# Mekanisk Sommerfugl styrt av Håndbevegelser
 
 Dette prosjektet lar deg styre en mekanisk sommerfugl med håndbevegelser foran et kamera, ved hjelp av OpenCV, MediaPipe og en ESP32-basert motorstyring. Systemet tolker håndgester i sanntid og oversetter dem til både roterende og “flaksende” bevegelser på sommerfuglen.
 
