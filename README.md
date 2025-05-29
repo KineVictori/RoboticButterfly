@@ -14,8 +14,8 @@ Dette prosjektet lar deg styre en mekanisk sommerfugl med håndbevegelser foran 
 - **ESP32-brett** med ferdiglaget PCB
 - **DC-motor med enkoder** (for rotasjon)
 - **Solenoid** (for vingeslag)
-- **Webkamera** (eller Raspberry Pi-kamera, med tilpasning)
-- **PC** med Python 3.x
+- **Webkamera**
+- **PC** med Python 3.11
 
 ## Programvareavhengigheter
 
