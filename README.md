@@ -5,7 +5,7 @@ Dette prosjektet lar deg styre en mekanisk sommerfugl med håndbevegelser foran 
 ## Funksjonalitet
 
 - **Rotasjon:** Sommerfuglen roterer til høyre eller venstre basert på hvor du peker med hånden.
-- **Vingeslag:** Når du lukker hånden (fører fingertuppen mot håndleddet), aktiveres solenoiden og sommerfuglen slår med vingene.
+- **Vingeslag:** Når du lukker hånden, aktiveres solenoiden og sommerfuglen slår med vingene.
 - **Responsiv styring:** Systemet bruker en PID-regulator for å gi jevne og stabile bevegelser, selv om håndsignalet varierer litt.
 - **Sanntidsvisning:** Håndsporing og tilbakemelding vises direkte i et OpenCV-vindu.
 
@@ -57,7 +57,7 @@ Standard seriellport er satt til `COM3` – endre dette i `main.py` hvis nødven
 4. **Bruk:**  
 - Beveg hånden foran kameraet.  
 - Peker du tydelig mot høyre eller venstre, roterer sommerfuglen den veien.
-- Lukker du hånden (fører fingertuppen mot håndleddet), slår sommerfuglen med vingene.
+- Lukker du hånden, slår sommerfuglen med vingene.
 - Håndsporing vises i eget vindu. Trykk `q` for å avslutte.
 
 ## Tilpasning
