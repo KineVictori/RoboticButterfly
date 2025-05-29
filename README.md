@@ -38,7 +38,7 @@ Dette prosjektet lar deg styre en mekanisk sommerfugl med håndbevegelser foran 
 ## Bruk
 
 1. **Koble til maskinvare:**  
-   Koble ESP32, motor og solenoid i henhold til ditt PCB-oppsett. Koble webkamera til PC.
+   Koble ESP32, motor og solenoid i henhold til PCB-oppsett. Koble webkamera til PC (evt. bruk det innebygde om du har det).
 
 2. **Installer avhengigheter:**  
 ```bash
