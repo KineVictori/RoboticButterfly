@@ -31,7 +31,6 @@ with mp_hands.Hands(
     
     if results.multi_hand_landmarks:
       for hand_landmarks in results.multi_hand_landmarks:
-        # Here is How to Get All the Coordinates
         for ids, landmrk in enumerate(hand_landmarks.landmark):
             # print(ids, landmrk)
             cx, cy = landmrk.x * image_width, landmrk.y*image_height
